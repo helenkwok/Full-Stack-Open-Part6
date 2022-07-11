@@ -19,11 +19,14 @@ const notificationSlice = createSlice({
 
 export const { addNotification, removeNotification } = notificationSlice.actions
 
+let timeoutID
+
 export const setNotification = (message, seconds) => {
   return async dispatch => {
-    dispatch(addNotification(`you voted '${message}'`))
+    clearTimeout(timeoutID)
+    dispatch(addNotification(`${message}`))
 
-    setTimeout(() => {
+    timeoutID = setTimeout(() => {
     dispatch(removeNotification())
     }, seconds * 1000)
   }
